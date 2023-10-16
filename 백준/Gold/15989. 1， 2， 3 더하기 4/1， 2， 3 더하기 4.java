@@ -14,7 +14,8 @@ public class Main {
             dy[3][1] = 1;
             dy[3][2] = 1;
             dy[3][3] = 1;
-
+            
+            //dy[i][j] -> i를 만드는 j로 끝나는 식, 오름차순 정렬함
             for (int j = 4; j <= n; j++) {
                 dy[j][1] = dy[j - 1][1];
                 dy[j][2] = dy[j - 2][1] + dy[j - 2][2];
