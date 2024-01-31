@@ -28,8 +28,6 @@ public class Main {
                 w = Integer.parseInt(st.nextToken());
 
                 ArrayList<Edge> edges = new ArrayList<>();
-
-
                 for (int j = 0; j < m + w; j++) {
                     st = new StringTokenizer(br.readLine());
                     int s = Integer.parseInt(st.nextToken());
@@ -64,8 +62,7 @@ public class Main {
 
         for (int i = 1; i <= n; i++) {
             update = false;
-            for (int j = 0; j < edges.size(); j++) {
-                Edge cur = edges.get(j);
+            for (Edge cur : edges) {
                 if (dis[cur.from] != INF && dis[cur.to] > dis[cur.from] + cur.time) {
                     dis[cur.to] = dis[cur.from] + cur.time;
                     update = true;
@@ -73,7 +70,6 @@ public class Main {
                         return true;
                     }
                 }
-
             }
             if (!update)
                 break;
