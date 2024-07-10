@@ -4,6 +4,7 @@ import java.util.*;
 public class Main {
 	static int n;
 	static char[][] map;
+	static List<int[]> empties = new ArrayList<>();
 
 	public static void main(String[] args) throws IOException {
 		try (
@@ -18,6 +19,8 @@ public class Main {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < n; j++) {
 					map[i][j] = st.nextToken().charAt(0);
+					if (map[i][j] == 'X')
+						empties.add(new int[] {i, j});
 				}
 			}
 
@@ -30,34 +33,22 @@ public class Main {
 	}
 
 	private static boolean solution() {
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < n; j++) {
-				if (map[i][j] == 'X')
-					map[i][j] = 'B';
-				else continue;
-				for (int a = 0; a < n; a++) {
-					for (int b = 0; b < n; b++) {
-						if (map[a][b] == 'X')
-							map[a][b] = 'B';
-						else continue;
-						for (int c = 0; c < n; c++) {
-							for (int d = 0; d < n; d++) {
-								if (map[c][d] == 'X')
-									map[c][d] = 'B';
-								else continue;
+		return combine(0, 0);
+	}
 
-								if (!moveTeacher()){
-									return true;
-								}
-								map[c][d] = 'X';
-							}
+	private static boolean combine(int s, int l) {
+		if (l == 3){
+			if (!moveTeacher())
+				return true;
+			return false;
+		}
 
-						}
-						map[a][b] = 'X';
-					}
-				}
-				map[i][j] = 'X';
-			}
+		for (int i = s; i < empties.size(); i++) {
+			int[] point = empties.get(i);
+			map[point[0]][point[1]] = 'B';
+			if (combine(i + 1, l + 1))
+				return true;
+			map[point[0]][point[1]] = 'X';
 		}
 		return false;
 	}
